@@ -45,7 +45,7 @@ ________________________________________
 
 •	AWS IAM
 
-•	Amazon CloudWatch
+•	Amazon CloudWatch logs
 
 •	Boto3 SDK for Python
 ________________________________________
