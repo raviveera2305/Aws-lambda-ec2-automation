@@ -1,4 +1,4 @@
-Assignemt 1: 🚀 AWS Lambda Automation Using Boto3
+🚀 AWS Lambda Automation Using Boto3
 
 Serverless AWS automation projects using AWS Lambda, Python Boto3, Amazon EC2, Amazon S3, IAM, and CloudWatch.
 
