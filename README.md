@@ -209,17 +209,11 @@ S3 Object Lifecycle Management
 🏗️ Architecture
 
                     ┌──────────────────────┐
-
                     │                      |
-
                     |     Amazon S3        │
-
                     │                      |
-
                     | s3-cleanup-raviveera |
-
                     │                      |
-
                     └──────────┬───────────┘
 
                                │
@@ -231,21 +225,13 @@ S3 Object Lifecycle Management
                                ▼
 
                     ┌──────────────────────┐
-
                     │                      |
-                    
                     |      AWS Lambda      |
-                    
                     │                      |
-                    
                     │   S3CleanupFunction  │
-                    
                     │                      |
-                    
                     |      Python/Boto3    │
-                    
                     |                      |
-                    
                     └──────────┬───────────┘
 
                                │
@@ -257,9 +243,7 @@ S3 Object Lifecycle Management
                                ▼
 
                     ┌──────────────────────┐
-
                     │  Older than 30 days? │
-
                     └──────────┬───────────┘
 
                                │
@@ -274,9 +258,7 @@ S3 Object Lifecycle Management
 
                     ▼                     ▼
           ┌─────────────────┐    ┌─────────────────┐
-
           │  Delete Object  │    │  Keep Object    │
-
           └────────┬────────┘    └─────────────────┘
 
                    │
@@ -284,28 +266,29 @@ S3 Object Lifecycle Management
                    ▼
 
           ┌─────────────────────┐
-
           │ Amazon CloudWatch   │
-
-          │       Logs          │
-          
+          │       Logs          │         
           └─────────────────────┘
+
 
 ☁️ AWS Services Used
 
-AWS Service	Purpose
 
-🪣 Amazon S3	Stores objects targeted for cleanup
+AWS Service-	Purpose
 
-⚡ AWS Lambda	Executes the automated cleanup
+🪣 Amazon S3-	Stores objects targeted for cleanup
 
-🔐 AWS IAM	Provides required Lambda permissions
+⚡ AWS Lambda-	Executes the automated cleanup
 
-📊 Amazon CloudWatch	Stores execution and deletion logs
+🔐 AWS IAM-	Provides required Lambda permissions
 
-🐍 Boto3	Python SDK used to interact with AWS
+📊 Amazon CloudWatch-	Stores execution and deletion logs
+
+🐍 Boto3-	Python SDK used to interact with AWS
+
 
 🪣 S3 Configuration
+
 
 Bucket
 
@@ -317,63 +300,65 @@ The S3 bucket contains objects that are evaluated by the Lambda function.
 
 The Lambda function checks the LastModified timestamp of each object and compares it against the configured retention period.
 
+
 🔐 IAM Configuration
+
 
 IAM Role
 
 LambdaS3CleanupRole
 
+
 Attached Policies
+
 
 AmazonS3FullAccess
 
 AWSLambdaBasicExecutionRole
 
+
 Policy Responsibilities
+
 
 AmazonS3FullAccess
 
+
 Provides the Lambda function with access to S3 objects required for the cleanup operation.
+
 
 AWSLambdaBasicExecutionRole
 
 Provides the Lambda function with permission to write execution logs to Amazon CloudWatch Logs.
 
-📌 In a production environment, AmazonS3FullAccess should be replaced with a least-privilege policy restricted to the required S3 bucket and actions.
 
 ⚡ Lambda Function Details
 
-Function Name
 
-S3CleanupFunction
+Function Name- S3CleanupFunction
 
-Runtime
+Runtime- Python 3.14
 
-Python 3.14
+Execution Role- LambdaS3CleanupRole
 
-Execution Role
+Default Retention Period- 30 Days
 
-LambdaS3CleanupRole
-
-Default Retention Period
-
-30 Days
 
 Responsibilities
 
-Connect to Amazon S3 using Boto3
 
-List objects in the configured bucket
+1. Connect to Amazon S3 using Boto3
 
-Read each object's LastModified timestamp
+2. List objects in the configured bucket
 
-Calculate the 30-day cutoff date
+3. Read each object's LastModified timestamp
 
-Delete objects older than 30 days
+4. Calculate the 30-day cutoff date
 
-Log deleted object names
+5. Delete objects older than 30 days
 
-Report the total number of deleted objects
+6. Log deleted object names
+
+7. Report the total number of deleted objects
 
 🐍 Boto3 Implementation
 
@@ -419,32 +404,38 @@ Delete       Keep
 
 Log Object
 
+
 🧪 Testing Performed
+
 
 A controlled test was performed using a temporary short retention period to validate the deletion functionality without waiting 30 days.
 
 The Lambda successfully:
 
 
-Identified eligible S3 objects
+1. Identified eligible S3 objects
 
-Deleted the objects matching the test condition
+2. Deleted the objects matching the test condition
 
-Logged the deleted object names
+3. Logged the deleted object names
 
-Retained the newer object during the cleanup verification
+4. Retained the newer object during the cleanup verification
 
 After successful testing, the Lambda function was restored to the required 30-day retention configuration.
 
+
 📊 Test Result
+
 
 Lambda Execution
 
-Test retention period → 1 minute
+Test retention period- 1 minute
 
-Objects deleted       → 6
+Objects deleted- 6
+
 
 S3 Verification
+
 
 After the cleanup operation, the S3 bucket contained the newer test object:
 
@@ -452,26 +443,30 @@ new-test-file.txt
 
 This verified that the cleanup logic was able to remove eligible objects while retaining a newer object.
 
+
 📈 CloudWatch Monitoring
+
 
 AWS Lambda execution logs were verified using Amazon CloudWatch Logs.
 
 The logs provide information including:
 
 
-Bucket being processed
+1. Bucket being processed
 
-Retention period
+2. Retention period
 
-Cutoff timestamp
+3. Cutoff timestamp
 
-Deleted object names
+4. Deleted object names
 
-Total number of deleted objects
+5. Total number of deleted objects
 
-Lambda execution status
+6. Lambda execution status
+
 
 Example:
+
 
 TEST MODE: Retention period = 1 minute(s)
 
