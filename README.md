@@ -15,6 +15,7 @@ This project demonstrates a serverless automation solution using AWS Lambda and 
 The Lambda function automatically identifies EC2 instances based on predefined tags and performs the appropriate action:
 
 Stops instances tagged with Action=Auto-Stop
+
 Starts instances tagged with Action=Auto-Start
 
 This approach helps automate operational tasks and reduces manual intervention in managing cloud resources.
@@ -24,83 +25,149 @@ This approach helps automate operational tasks and reduces manual intervention i
 Gain hands-on experience with:
 
 AWS Lambda
+
 Amazon EC2
+
 AWS IAM
+
 Python Boto3 SDK
+
 Amazon CloudWatch
+
 Serverless Automation
+
 🏗️ Architecture
+
                     ┌──────────────────────┐
                     │      AWS Lambda      │
                     │   EC2TagAutomation   │
                     │      Python/Boto3    │
                     └──────────┬───────────┘
+                               
                                │
+
                        EC2 API Operations
+
                                │
+
                 ┌──────────────┴──────────────┐
+                
                 │                             │
+
                 ▼                             ▼
+
        ┌─────────────────┐           ┌─────────────────┐
-       │ AutoStop-       │           │ AutoStart-      │
-       │ Instance        │           │ Instance        │
-       │ Action=         │           │ Action=         │
-       │ Auto-Stop       │           │ Auto-Start      │
+       │                 |           |                 |
+       | AutoStop-       │           │ AutoStart-      │
+       │                 |           |                 |
+       | Instance        │           │ Instance        │
+       │                 |           |                 |
+       | Action=         │           | Action=         │
+       │                 |           |                 |
+       | Auto-Stop       │           │ Auto-Start      |
+       |                 │           |                 |
        └─────────────────┘           └─────────────────┘
+                
                 │                             │
+
                 └──────────────┬──────────────┘
+
                                ▼
+
                     ┌──────────────────────┐
-                    │  Amazon CloudWatch   │
-                    │        Logs          │
+                    │                      |
+                    |   Amazon CloudWatch  │
+                    │                      |
+                    |         Logs         |
+                    |                      │
                     └──────────────────────┘
+
 ☁️ AWS Services Used
+
 AWS Lambda
+
 Amazon EC2
+
 AWS IAM
+
 Amazon CloudWatch Logs
+
 Boto3 SDK for Python
+
 🖥️ EC2 Configuration
+
 AutoStop Instance
+
 Name     : AutoStop-Instance
+
 Tag Key  : Action
+
 Value    : Auto-Stop
+
 AutoStart Instance
+
 Name     : AutoStart-Instance
+
 Tag Key  : Action
+
 Value    : Auto-Start
+
 🔐 IAM Configuration
+
 IAM Role
+
 LambdaEC2ManagementRole
+
 Attached Policy
+
 AmazonEC2FullAccess
 
 📌 For production environments, the IAM policy should be restricted according to the principle of least privilege.
 
 ⚡ Lambda Function Details
+
 Function Name
+
 EC2TagAutomation
+
 Runtime
+
 Python 3.14
+
 Responsibilities
+
 Discover EC2 instances using tags
+
 Stop Auto-Stop instances
+
 Start Auto-Start instances
+
 Generate execution logs
+
 🧪 Testing Performed
+
 Before Lambda Execution
+
 AutoStop-Instance  → Running
+
 AutoStart-Instance → Stopped
+
 After Lambda Execution
+
 AutoStop-Instance  → Stopped
+
 AutoStart-Instance → Running
+
 ✅ Assignment 1 Results
 
 The Lambda function successfully:
 
 Identified EC2 instances using tags
+
 Stopped instances tagged as Auto-Stop
+
 Started instances tagged as Auto-Start
+
 Logged execution details in CloudWatch
 
 The automation worked as expected and fulfilled the assignment requirements.
@@ -126,58 +193,124 @@ The solution eliminates the need for manual cleanup and demonstrates practical s
 Gain hands-on experience with:
 
 AWS Lambda
+
 Amazon S3
+
 AWS IAM
+
 Python Boto3 SDK
+
 Amazon CloudWatch Logs
+
 Serverless Automation
+
 S3 Object Lifecycle Management
+
 🏗️ Architecture
+
                     ┌──────────────────────┐
-                    │     Amazon S3        │
-                    │  s3-cleanup-raviveera│
+
+                    │                      |
+
+                    |     Amazon S3        │
+
+                    │                      |
+
+                    | s3-cleanup-raviveera |
+
+                    │                      |
+
                     └──────────┬───────────┘
+
                                │
+
                          List Objects
+
                                │
+
                                ▼
+
                     ┌──────────────────────┐
-                    │      AWS Lambda      │
+
+                    │                      |
+                    
+                    |      AWS Lambda      |
+                    
+                    │                      |
+                    
                     │   S3CleanupFunction  │
-                    │      Python/Boto3    │
+                    
+                    │                      |
+                    
+                    |      Python/Boto3    │
+                    
+                    |                      |
+                    
                     └──────────┬───────────┘
+
                                │
+
                        Check LastModified
+
                                │
+
                                ▼
+
                     ┌──────────────────────┐
-                    │   Older than 30 days?│
+
+                    │  Older than 30 days? │
+
                     └──────────┬───────────┘
+
                                │
+
                     ┌──────────┴──────────┐
+
                     │                     │
+
                    YES                    NO
+
                     │                     │
+
                     ▼                     ▼
           ┌─────────────────┐    ┌─────────────────┐
+
           │  Delete Object  │    │  Keep Object    │
+
           └────────┬────────┘    └─────────────────┘
+
                    │
+
                    ▼
+
           ┌─────────────────────┐
+
           │ Amazon CloudWatch   │
+
           │       Logs          │
+          
           └─────────────────────┘
+
 ☁️ AWS Services Used
+
 AWS Service	Purpose
+
 🪣 Amazon S3	Stores objects targeted for cleanup
+
 ⚡ AWS Lambda	Executes the automated cleanup
+
 🔐 AWS IAM	Provides required Lambda permissions
+
 📊 Amazon CloudWatch	Stores execution and deletion logs
+
 🐍 Boto3	Python SDK used to interact with AWS
+
 🪣 S3 Configuration
+
 Bucket
+
 s3-cleanup-raviveera
+
 Purpose
 
 The S3 bucket contains objects that are evaluated by the Lambda function.
@@ -185,11 +318,17 @@ The S3 bucket contains objects that are evaluated by the Lambda function.
 The Lambda function checks the LastModified timestamp of each object and compares it against the configured retention period.
 
 🔐 IAM Configuration
+
 IAM Role
+
 LambdaS3CleanupRole
+
 Attached Policies
+
 AmazonS3FullAccess
+
 AWSLambdaBasicExecutionRole
+
 Policy Responsibilities
 
 AmazonS3FullAccess
@@ -203,22 +342,39 @@ Provides the Lambda function with permission to write execution logs to Amazon C
 📌 In a production environment, AmazonS3FullAccess should be replaced with a least-privilege policy restricted to the required S3 bucket and actions.
 
 ⚡ Lambda Function Details
+
 Function Name
+
 S3CleanupFunction
+
 Runtime
+
 Python 3.14
+
 Execution Role
+
 LambdaS3CleanupRole
+
 Default Retention Period
+
 30 Days
+
 Responsibilities
+
 Connect to Amazon S3 using Boto3
+
 List objects in the configured bucket
+
 Read each object's LastModified timestamp
+
 Calculate the 30-day cutoff date
+
 Delete objects older than 30 days
+
 Log deleted object names
+
 Report the total number of deleted objects
+
 🐍 Boto3 Implementation
 
 The Lambda function uses the Boto3 S3 client and an S3 paginator to process objects.
@@ -228,40 +384,66 @@ The paginator was used so that the implementation can handle buckets containing 
 The cleanup workflow is:
 
 Initialize Boto3 S3 Client
+
         ↓
+
 Calculate 30-Day Cutoff Date
+
         ↓
+
 List S3 Objects
+
         ↓
+
 Read LastModified Timestamp
+
         ↓
+
 Compare Object Age
+
         ↓
+
 Older Than 30 Days?
+
         ↓
+
    ┌────┴────┐
+
   YES        NO
+
    ↓          ↓
+
 Delete       Keep
+
    ↓
+
 Log Object
+
 🧪 Testing Performed
 
 A controlled test was performed using a temporary short retention period to validate the deletion functionality without waiting 30 days.
 
 The Lambda successfully:
 
+
 Identified eligible S3 objects
+
 Deleted the objects matching the test condition
+
 Logged the deleted object names
+
 Retained the newer object during the cleanup verification
 
 After successful testing, the Lambda function was restored to the required 30-day retention configuration.
 
 📊 Test Result
+
 Lambda Execution
+
 Test retention period → 1 minute
+
 Objects deleted       → 6
+
 S3 Verification
 
 After the cleanup operation, the S3 bucket contained the newer test object:
@@ -276,16 +458,25 @@ AWS Lambda execution logs were verified using Amazon CloudWatch Logs.
 
 The logs provide information including:
 
+
 Bucket being processed
+
 Retention period
+
 Cutoff timestamp
+
 Deleted object names
+
 Total number of deleted objects
+
 Lambda execution status
 
 Example:
 
 TEST MODE: Retention period = 1 minute(s)
+
 Checking bucket: s3-cleanup-raviveera
+
 Deleted: <object-name>
+
 Cleanup completed. Total objects deleted: 6
