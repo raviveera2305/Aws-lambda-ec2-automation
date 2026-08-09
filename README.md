@@ -5,12 +5,14 @@ Serverless AWS automation projects using AWS Lambda, Python Boto3, Amazon EC2, A
 
 This repository contains hands-on AWS automation assignments focused on reducing manual cloud operations through serverless automation.
 
+==========================================================
 
 📌 Assignment 1: AWS Lambda EC2 Instance Automation
 
 
 Automating Amazon EC2 instance management using AWS Lambda and Python Boto3 based on EC2 resource tags.
 
+==========================================================
 
 📌 Project Overview
 
@@ -25,6 +27,7 @@ The Lambda function automatically identifies EC2 instances based on predefined t
 
 This approach helps automate operational tasks and reduces manual intervention in managing cloud resources.
 
+==========================================================
 
 🎯 Assignment Objective
 
@@ -43,6 +46,7 @@ Gain hands-on experience with:
 
 •	Serverless Automation
 
+==========================================================
 
 🏗️ Architecture
 
@@ -91,6 +95,7 @@ Gain hands-on experience with:
                     |                      │
                     └──────────────────────┘
 
+==========================================================
 
 ☁️ AWS Services Used
 
@@ -103,6 +108,8 @@ Gain hands-on experience with:
 •	Amazon CloudWatch Logs
 
 •	Boto3 SDK for Python
+
+==========================================================
 
 🖥️ EC2 Configuration
 
@@ -122,9 +129,9 @@ AutoStart Instance
 
 •	Value   : Auto-Start
 
+==========================================================
 
 🔐 IAM Configuration
-
 
 IAM Role
 
@@ -134,6 +141,7 @@ Attached Policy
 
 AmazonEC2FullAccess
 
+==========================================================
 
 ⚡ Lambda Function Details
 
@@ -152,6 +160,7 @@ Responsibilities
 
 •	Generate execution logs
 
+==========================================================
 
 🧪 Testing Performed
 
@@ -168,6 +177,7 @@ After Lambda Execution
 
 •	AutoStart-Instance → Running
 
+==========================================================
 
 ✅ Assignment 1 Results
 
@@ -184,11 +194,13 @@ The Lambda function successfully:
 
 The automation worked as expected and fulfilled the assignment requirements.
 
--------------------------------------------------------------
+==========================================================
 
 🗄️ Assignment 2: Automated S3 Bucket Cleanup Using AWS Lambda and Boto3
 
 Automating the deletion of Amazon S3 objects older than 30 days using AWS Lambda and Python Boto3.
+
+==========================================================
 
 📌 Project Overview
 
@@ -200,6 +212,7 @@ Automating the deletion of Amazon S3 objects older than 30 days using AWS Lambda
 
 •	The solution eliminates the need for manual cleanup and demonstrates practical serverless cloud automation.
 
+==========================================================
 
 🎯 Assignment Objective
 
@@ -219,6 +232,7 @@ Gain hands-on experience with:
 
 •	S3 Object Lifecycle Management
 
+==========================================================
 
 🏗️ Architecture
 
@@ -285,9 +299,9 @@ Gain hands-on experience with:
           │       Logs          │         
           └─────────────────────┘
 
+==========================================================
 
 ☁️ AWS Services Used
-
 
 AWS Service-	Purpose
 
@@ -301,9 +315,9 @@ AWS Service-	Purpose
 
 •	🐍 Boto3-	Python SDK used to interact with AWS
 
+==========================================================
 
 🪣 S3 Configuration
-
 
 Bucket
 
@@ -315,36 +329,27 @@ Purpose
 
 •	The Lambda function checks the Last Modified timestamp of each object and compares it against the configured retention period.
 
+==========================================================
 
 🔐 IAM Configuration
 
-
-IAM Role
-
-LambdaS3CleanupRole
-
+IAM Role- LambdaS3CleanupRole
 
 Attached Policies
-
 
 AmazonS3FullAccess
 
 AWSLambdaBasicExecutionRole
 
-
-Policy Responsibilities
-
-
-AmazonS3FullAccess
-
+Policy Responsibilities- AmazonS3FullAccess
 
 Provides the Lambda function with access to S3 objects required for the cleanup operation.
-
 
 AWSLambdaBasicExecutionRole
 
 Provides the Lambda function with permission to write execution logs to Amazon CloudWatch Logs.
 
+==========================================================
 
 ⚡ Lambda Function Details
 
@@ -375,6 +380,7 @@ Responsibilities
 
 •	Report the total number of deleted objects
 
+==========================================================
 
 🐍 Boto3 Implementation
 
@@ -421,6 +427,7 @@ Delete       Keep
 
 Log Object
 
+==========================================================
 
 🧪 Testing Performed
 
@@ -441,6 +448,7 @@ The Lambda successfully:
 
 After successful testing, the Lambda function was restored to the required 30-day retention configuration.
 
+==========================================================
 
 📊 Test Result
 
@@ -461,6 +469,7 @@ After the cleanup operation, the S3 bucket contained the newer test object:
 
 This verified that the cleanup logic was able to remove eligible objects while retaining a newer object.
 
+==========================================================
 
 📈 CloudWatch Monitoring
 
