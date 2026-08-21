@@ -393,23 +393,23 @@ The cleanup workflow is:
 
 Initialize Boto3 S3 Client
 
-        ↓
+↓
 
 Calculate 30-Day Cutoff Date
 
-        ↓
+↓
 
 List S3 Objects
 
-        ↓
+↓
 
 Read Last Modified Timestamp
 
-        ↓
+↓
 
 Compare Object Age
 
-        ↓
+↓
 
 Older Than 30 Days?
 
@@ -419,7 +419,7 @@ Older Than 30 Days?
 
   YES        NO
 
-   ↓          ↓
+   ↓           ↓
 
 Delete       Keep
 
