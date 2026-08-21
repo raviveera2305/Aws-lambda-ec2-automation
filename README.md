@@ -502,3 +502,288 @@ Checking bucket: s3-cleanup-raviveera
 Deleted: <object-name>
 
 Cleanup completed. Total objects deleted: 6
+
+==========================================================
+
+📌 Assignment 3: Monitor Unencrypted S3 Buckets Using AWS Lambda and Boto3
+
+Automating the detection of S3 buckets without server-side encryption using AWS Lambda and Python Boto3.
+
+==========================================================
+
+📌 Project Overview
+
+This project demonstrates a serverless S3 security monitoring solution using AWS Lambda and Boto3.
+
+The Lambda function:
+
+• Lists all S3 buckets
+
+• Checks the server-side encryption configuration of each bucket
+
+• Identifies buckets without encryption configuration
+
+• Logs the encryption status of each bucket
+
+• Reports the final security scan result through CloudWatch Logs
+
+This approach helps automate basic S3 security checks and reduces manual monitoring.
+
+==========================================================
+
+🎯 Assignment Objective
+
+Gain hands-on experience with:
+
+• AWS Lambda
+
+• Amazon S3
+
+• AWS IAM
+
+• Python Boto3 SDK
+
+• Amazon CloudWatch Logs
+
+• Serverless Security Monitoring
+
+==========================================================
+
+🏗️ Architecture
+
+                 ┌──────────────────────┐
+                 │                      |
+                 |      AWS Lambda      |
+                 │                      | 
+                 │  S3EncryptionMonitor |
+                 │                      |
+                 │     Python/Boto3     |
+                 │                      |
+                 └──────────┬───────────┘
+
+                            │
+                 
+                     List S3 Buckets
+                 
+                            │
+                 
+                            ▼
+                 
+                 ┌──────────────────────┐
+                 |                      |
+                 │      Amazon S3       │
+                 │                      │
+                 │  Check Encryption    │
+                 |                      |
+                 │    Configuration     │
+                 |                      | 
+                 └──────────┬───────────┘
+
+                            │
+                 
+                   Encryption Status
+                 
+                            │
+                 
+                 ┌──────────┴──────────┐
+                 
+                 │                     │
+                
+                YES                    NO
+                
+                 │                     │
+                
+                 ▼                     ▼
+          ┌──────────────┐      ┌──────────────┐
+          |              |      |              |
+          │   Encrypted  │      │ Unencrypted  │
+          |              |      |              | 
+          │    Bucket    │      │    Bucket    │
+          |              |      |              |        
+          └──────┬───────┘      └──────┬───────┘
+          
+                 │                     │
+          
+                 └──────────┬──────────┘
+          
+                            ▼
+          
+                 ┌──────────────────────┐
+                 |                      |
+                 │   Amazon CloudWatch  │
+                 |                      |
+                 │        Logs          │
+                 |                      |
+                 └──────────────────────┘
+
+==========================================================
+
+☁️ AWS Services Used
+
+AWS Service - Purpose
+
+• 🪣 Amazon S3 - Provides the buckets being monitored
+
+• ⚡ AWS Lambda - Executes the encryption monitoring function
+
+• 🔐 AWS IAM - Provides Lambda with required permissions
+
+• 📊 Amazon CloudWatch - Stores Lambda execution logs
+
+• 🐍 Boto3 - Python SDK used to interact with AWS
+
+==========================================================
+
+🪣 S3 Configuration
+
+Test Buckets
+
+• s3-encryption-monitor-raviveera-01
+
+• s3-encryption-monitor-raviveera-02
+
+• s3-encryption-monitor-raviveera-03
+
+Purpose
+
+• The buckets were created to test the S3 encryption monitoring function.
+
+• The default encryption configuration of the buckets was reviewed.
+
+==========================================================
+
+🔐 IAM Configuration
+
+IAM Role
+
+LambdaS3EncryptionMonitorRole
+
+Attached Policies
+
+• AmazonS3ReadOnlyAccess
+
+• AWSLambdaBasicExecutionRole
+
+Policy Responsibilities
+
+AmazonS3ReadOnlyAccess
+
+• Allows the Lambda function to read S3 bucket information and encryption configuration.
+
+AWSLambdaBasicExecutionRole
+
+• Allows the Lambda function to write execution logs to Amazon CloudWatch Logs.
+
+==========================================================
+
+⚡ Lambda Function Details
+
+• Function Name - S3EncryptionMonitor
+
+• Runtime - Python 3.14
+
+• Execution Role - LambdaS3EncryptionMonitorRole
+
+Responsibilities
+
+• List all S3 buckets
+
+• Check bucket encryption configuration
+
+• Identify buckets without encryption configuration
+
+• Log encryption status
+
+• Report unencrypted buckets
+
+==========================================================
+
+🐍 Boto3 Implementation
+
+The Lambda function uses the Boto3 S3 client to:
+
+• List S3 buckets
+
+• Check encryption configuration using get_bucket_encryption()
+
+• Detect missing encryption configuration
+
+• Log the results
+
+The Lambda source file is:
+
+src/s3_encryption_monitor.py
+
+==========================================================
+
+🧪 Testing Performed
+
+A manual Lambda test event was created:
+
+Test Event Name
+
+S3EncryptionMonitorTest
+
+Test Event
+
+{}
+
+The Lambda function was manually invoked to verify the S3 encryption monitoring logic.
+
+The function successfully:
+
+• Listed the available S3 buckets
+
+• Checked encryption configuration
+
+• Logged the encryption status
+
+• Completed the security scan
+
+==========================================================
+
+📊 Test Result
+
+The Lambda function successfully completed the S3 encryption scan.
+
+Current AWS S3 configuration resulted in:
+
+• Encrypted buckets detected
+
+• No unencrypted buckets detected
+
+Final result:
+
+No unencrypted S3 buckets detected.
+
+==========================================================
+
+📈 CloudWatch Monitoring
+
+AWS Lambda execution logs were verified using Amazon CloudWatch Logs.
+
+The logs provide information including:
+
+• Total number of S3 buckets checked
+
+• Encryption status of each bucket
+
+• Names of any unencrypted buckets
+
+• Final security scan result
+
+==========================================================
+
+✅ Assignment 3 Results
+
+The Lambda function successfully:
+
+• Discovered S3 buckets
+
+• Checked server-side encryption configuration
+
+• Identified potential encryption gaps
+
+• Generated CloudWatch logs
+
+• Completed the security monitoring scan
